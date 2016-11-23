@@ -60,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
         String selectedOption = view.getTag().toString();
         //  Log.i("info", "selectedOption : " + selectedOption);
         registerAnswer(quiz, quiz.getQuestions().get(quiz.getCurrentQuestionIndex()), selectedOption);
+        showCurrentScore();
+        quiz.incrementQuestionIndex();
         showNextQuestion();
     }
 
     public void startAgain(View view){
         quiz.resetForNewRound();
+        showCurrentScore();
         showNextQuestion();
     }
 
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             // Log.i("QuizHelper", responseHTML);
 
             this.quiz = quizHelper.extractCelebritiesAndBuildQuiz(responseHTML);
+            showCurrentScore();
             showNextQuestion();
 
         } catch (InterruptedException e) {
@@ -105,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showNextQuestion(){
-        showCurrentScore();
-        quiz.incrementQuestionIndex();
 
         Question question = quiz.getQuestions().get(quiz.getCurrentQuestionIndex());
 
